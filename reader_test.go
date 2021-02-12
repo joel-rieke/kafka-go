@@ -1715,9 +1715,8 @@ func TestErrorCannotConnectGroupSubscription(t *testing.T) {
 	defer cancel()
 
 	_, err := r.FetchMessage(ctx)
-	if err == nil || ctx.Err() != nil {
-		t.Errorf("Reader.FetchMessage with a group subscription " +
-			"must fail when it cannot connect")
+	if err != context.DeadlineExceeded {
+		t.Errorf("bad err: %v", err)
 	}
 }
 
